@@ -1,38 +1,24 @@
-<p align="center">
-  <img src="docs/assets/readme/zleap-readme-header.png" alt="Zleap 与宇航员" width="294" />
-</p>
-
-<h1 align="center">SAG</h1>
+<h1 align="center">AIM Knowledge Base</h1>
 
 <p align="center">
   <a href="README.md">English</a> · <strong>简体中文</strong>
 </p>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2606.15971"><img alt="论文" src="https://img.shields.io/badge/paper-arXiv%3A2606.15971-18181b" /></a>
-  <a href="https://pypi.org/project/zleap-sag/"><img alt="PyPI" src="https://img.shields.io/pypi/v/zleap-sag?label=zleap--sag&color=18181b" /></a>
-  <img alt="SAG 版本" src="https://img.shields.io/badge/SAG-v1.9.2-18181b" />
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776ab" />
   <img alt="Node" src="https://img.shields.io/badge/Node-20%2B-339933" />
   <a href="LICENSE"><img alt="许可" src="https://img.shields.io/badge/license-MIT-18181b" /></a>
 </p>
 
-<blockquote>
-  <p align="center">推广：我们最新的开源知识库应用 <strong><a href="https://github.com/Zleap-AI/SAG-Wiki">SAG-Wiki</a></strong>，基于全新的 SAG2 技术，更快、更轻。</p>
-</blockquote>
-
-<p align="center"><strong>从今天起，你只需要这一个知识库应用</strong></p>
+<p align="center"><strong>面向企业/个人与 Agent 的开源知识库应用。</strong></p>
 
 <p align="center">
-  基于 SOTA 的 SAG 架构，把分散的文档与数据变成可搜索、可关联、可追溯的知识。
+  把分散的文档与数据变成可搜索、可关联、可追溯的知识。
 </p>
-
-https://github.com/user-attachments/assets/a080ad1a-5c08-4213-acfa-a226e3c0f68a
 
 ## 目录
 
 <p align="center">
-  <a href="#社区交流">社区交流</a> ·
   <a href="#项目介绍">项目介绍</a> ·
   <a href="#技术原理">技术原理</a> ·
   <a href="#用户指南">用户指南</a> ·
@@ -47,21 +33,19 @@ https://github.com/user-attachments/assets/a080ad1a-5c08-4213-acfa-a226e3c0f68a
 
 ### 更新日志
 
-版本发布记录与各版本变更请查看 [CHANGELOG.md](CHANGELOG.md)。
+AIM Knowledge Base 的版本变更记录请查看 [CHANGELOG.md](CHANGELOG.md)。
 
-### 一分钟了解 SAG
+### 一分钟了解 AIM Knowledge Base
 
-SAG 不是传统 RAG 与 GraphRAG 的融合，而是一套替代二者的原创检索架构。
+AIM Knowledge Base 是基于 SAG 二次开发的知识库应用，沿用其 event-entity 索引与查询时动态超边架构。
 
-它通过 event-entity 索引与查询时动态超边，在一个系统中同时实现语义检索与关系推理，不再需要维护两套 RAG 系统或拼接两路召回结果。
+SAG 架构在一个系统中同时实现语义检索与关系推理，无需分别维护传统 RAG 和 GraphRAG 两套系统，也无需拼接两路召回结果。
 
-在 HotpotQA、2WikiMultiHopQA 和 MuSiQue 上的实验表明，SAG 在每个基准测试中均取得最佳的检索与端到端 QA 性能，实现 RAG 领域的新 SOTA。
-
-本项目是基于 SAG 制作的面向个人与 Agent 的完整知识库应用：
+AIM Knowledge Base 在此基础上提供面向企业、个人与 Agent 的完整知识库应用：
 
 **信源与文档 → 结构化知识 → 检索与原文溯源 → 带引用的 Agent 回答 → 通过 API 或 MCP 复用**
 
-文档只需上传一次。SAG 会自动解析、分块、向量化，抽取事件与实体，并让每一条检索结果都能回到原文。你可以跨信源搜索、查看 event-entity 图谱、进行带引用的问答，也可以把同一份知识开放给其他应用。
+文档只需上传一次。AIM Knowledge Base 会自动解析、分块、向量化，抽取事件与实体，并让每一条检索结果都能回到原文。你可以跨信源搜索、查看 event-entity 图谱、进行带引用的问答，也可以把同一份知识开放给其他应用。
 
 | 能力 | 解决的问题 |
 | --- | --- |
@@ -80,24 +64,11 @@ SAG 不是传统 RAG 与 GraphRAG 的融合，而是一套替代二者的原创�
 
 ## 技术原理
 
-### 论文
-
-**SAG: SQL-Retrieval Augmented Generation with Query-Time Dynamic Hyperedges**<br>
-Yuchao Wu*、Junqin Li、XingCheng Liang、Yongjie Chen、Yinghao Liang、Linyuan Mo、Guanxian Li
-
-[阅读论文](https://arxiv.org/abs/2606.15971) · [复现跑分](https://github.com/Zleap-AI/SAG-Benchmark)
-
-<p align="center">
-  <a href="https://arxiv.org/abs/2606.15971">
-    <img src="docs/assets/readme/paper-first-page.png" alt="SAG 论文首页" width="900" />
-  </a>
-</p>
-
-### 一套原创的第三种架构
+### SAG 架构
 
 传统稠密 RAG 主要依靠语义相似度召回文本块。GraphRAG 在此基础上引入离线图谱构建，却要承担三元组抽取、实体合并、关系归一、全局维护和增量更新困难等成本。
 
-SAG 不是对这两套系统的封装或组合。它用自己的数据模型和执行路径替代了这种选型：
+SAG 不是对这两套系统的封装或组合，而是引入了自己的数据模型和执行路径：
 
 ```text
 chunk → 一个语义完整的 event
@@ -111,10 +82,6 @@ event ↔ entities → 一条潜在超边
 - **原文证据**始终是输出边界。被选中的事件最终映射回原始 chunk，用于生成回答和引用。
 
 SAG 内部的语义路径和结构路径都是 SAG 自己检索管线的组成部分，并不是一套传统 RAG 服务和一套 GraphRAG 服务同时运行。
-
-<p align="center">
-  <img src="docs/assets/readme/paper-sag-architecture.png" alt="SAG 论文原始架构图" width="940" />
-</p>
 
 ### 检索流程
 
@@ -134,47 +101,19 @@ SAG 内部的语义路径和结构路径都是 SAG 自己检索管线的组成�
 
 因此，增量写入不需要重算全局图谱。每个新 chunk 只需加入自己的事件、实体和关联即可。
 
-### RAG 领域新 SOTA
-
-在相同的 `BGE-Large-EN-v1.5` Embedding 与 `Qwen3.6-Flash` LLM 配置下，SAG 在 HotpotQA、2WikiMultiHopQA 和 MuSiQue 的每个基准测试中均取得最佳的检索与端到端 QA 性能。
-
-- SAG 在三个数据集上的平均 Recall@5 和 F1 为 **90.07%/72.96%**，相比最强基准分别提升 **6.79/4.33** 个百分点。
-- 在最具挑战的 MuSiQue 上，Recall@5 和 F1 较各指标的最强基准分别提升 **11.52/7.01** 个百分点。
-
-完整跑分如下：
-
-<p align="center">
-  <img src="docs/assets/readme/main-result.png" alt="SAG实验结果" width="940" />
-</p>
-
-完整方法与复现脚本见[论文](https://arxiv.org/abs/2606.15971)和 [SAG-Benchmark](https://github.com/Zleap-AI/SAG-Benchmark)。
-
 ---
 
 <a id="用户指南"></a>
 
 ## 用户指南
 
-### 桌面客户端（最省事）
-
-从 [GitHub Releases](https://github.com/Zleap-AI/SAG/releases) 下载最新桌面安装包：
-
-| 平台 | 下载文件 | 更新方式 |
-| --- | --- | --- |
-| macOS 15+，Apple Silicon | `SAG-*-mac-arm64.dmg` | 已签名、公证；应用内更新由用户分别确认下载和安装 |
-| Windows 10/11，x64 | `SAG-Setup-*-win-x64.exe` | 暂不签名，Windows 可能提示“未知发布者”；应用内更新由用户分别确认下载和安装 |
-
-桌面客户端已经包含 Web 工作台和本地知识后端，用户无需安装 Python、Node.js 或数据库。整包更新不会覆盖系统应用数据目录中的知识库与上传文件；每个 Release 同时提供 `SHA256SUMS.txt` 完整性校验。
-
-检测到不兼容的旧知识数据时，SAG 会先保持旧数据不变，直到你确认备份并创建全新知识库。SAG 不会自动迁移或合并旧知识库；完成设置后需要重新上传文档。备份可供人工恢复。账号和模型配置会保留，但旧知识库、文档、智能体、会话及关联任务记录不会出现在新工作区中。当前格式的工作区继续使用原数据目录。
-
 ### 快速开始（Docker，自托管）
 
 准备 Docker Desktop，或 Docker Engine 与 Compose v2。
 
 ```bash
-git clone https://github.com/Zleap-AI/SAG.git
-cd SAG
+git clone https://github.com/boyanilu/aim-knowledge-base.git
+cd aim-knowledge-base
 docker compose up -d --build
 ```
 
@@ -214,10 +153,6 @@ Docker Compose 或 `.env` 中的 `SAG_LLM_*` 用于提供首次启动时的模�
 
 上传时显示真实传输进度。后台处理时，文档列表和详情显示当前阶段与可用的分块计数（例如“已处理 810 / 2,033 个分块”），不显示整体百分比。文档变为**就绪**后即可检索。
 
-<p align="center">
-  <img src="docs/assets/readme/product-import.png" alt="向 SAG 导入文档" width="940" />
-</p>
-
 PDF 在 MinerU 配置完整时优先使用 MinerU；未配置或解析失败时自动回退本地 MarkItDown。其他 Office 和文本格式默认使用 MarkItDown。
 
 PDF 解析也支持自托管 MinerU 4.x V1 API（`mineru-kit api-server`）。参照 [`.env.example`](.env.example)，配置 `SAG_MINERU_PROVIDER=self_hosted`、`SAG_MINERU_BASE_URL`，并将 `SAG_DOCUMENT_PARSER` 设为 `auto` 或 `mineru`。本机或内网地址还需显式设置 `SAG_MINERU_ALLOW_PRIVATE_BASE_URL=true`。修改部署配置后重新创建 API 容器。此前在界面保存的解析器/MinerU 配置会覆盖环境默认值；请通过鉴权 `PUT /api/v1/system/model-config` 更新已保存的值，并在导入 PDF 前核对实际生效配置。
@@ -228,10 +163,6 @@ PDF 解析也支持自托管 MinerU 4.x V1 API（`mineru-kit api-server`）。�
 
 可以跨信源检索，也可以只搜索指定信源。未显式选择信源时，全局检索和默认 Agent 的知识检索默认最多使用 16 个候选信源；可通过 `@` 指定需要检索的信源。每一条结果都能在右侧打开对应原文块，让 Agent 使用前的召回质量可以被直接核验。
 
-<p align="center">
-  <img src="docs/assets/readme/product-search.png" alt="SAG 检索结果与原文溯源" width="940" />
-</p>
-
 ### 进行带引用的问答
 
 Agent 会在本轮知识范围内检索、流式生成回答，并附上可点击引用。同一套对话能力也通过 OpenAI 兼容接口开放。
@@ -240,29 +171,13 @@ Agent 会在本轮知识范围内检索、流式生成回答，并附上可点�
 
 在任意页面点击侧栏的“新建对话”，都可以打开空白草稿。即使旧对话仍在生成回答，返回聊天页时也会保留新草稿的选中状态。原有对话仍保留在历史中，新草稿会在发送第一个问题后保存为对话。SAG 一次生成一个回答，因此需要等待当前回答结束或先停止它，再在新草稿中发送问题。
 
-<p align="center">
-  <img src="docs/assets/readme/product-chat.png" alt="带原文引用的 Agent 回答" width="940" />
-</p>
-
 ### 探索模式
 
 探索模式会将整个知识库展开为可交互的知识宇宙。你可以在同一视图中搜索事件与实体、沿关联关系漫游，并随时打开事件详情与原文。
 
-<p align="center">
-  <img src="docs/assets/readme/product-explore-mode.gif" alt="SAG 探索模式" width="940" />
-</p>
-
 ### 查看 event-entity 图谱
 
 在信源中从列表切换到图谱，可以查看 SAG 索引生成的事件、实体和关联关系。
-
-<p align="center">
-  <img src="docs/assets/readme/product-graph.png" alt="SAG event-entity 知识图谱" width="940" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/readme/product-graph-3d.png" alt="SAG event-entity 3D 知识图谱" width="940" />
-</p>
 
 ### MCP 指南
 
@@ -315,10 +230,6 @@ cp -r "$SKILL_SRC/skill" ~/.codex/skills/sag-knowledge
 #### 手动挂载（备选）
 
 不方便安装 CLI 时，可以在 SAG 中打开 **设置 → 集成 → 知识库 MCP**，选择 HTTP 或本地命令，把完整配置复制粘贴到 Agent 的 MCP 配置文件里。HTTP 配置已自动带入当前 JWT，默认开放全部信源，也可以通过 `source_id` 限定范围。
-
-<p align="center">
-  <img src="docs/assets/readme/product-mcp.png" alt="SAG 知识库 MCP 集成设置" width="940" />
-</p>
 
 ### 在 DeepSeek Harness 中使用 SAG
 
@@ -401,10 +312,6 @@ docker compose up -d --build
 ### 系统边界
 
 SAG 采用 Next.js 前端与 FastAPI 后端分离的架构。后端是基于公开 Python 引擎 `zleap-sag` 制作的参考应用。开发者既可以保留整个后端、制作自己的前端，也可以在自己的 Python 服务中直接嵌入 `zleap-sag`。
-
-<p align="center">
-  <img src="docs/assets/readme/repository-architecture-cn.png" alt="SAG 仓库结构与 API 边界" width="960" />
-</p>
 
 ### 代码库结构
 
@@ -679,32 +586,3 @@ docker compose -f compose.yaml -f compose.postgres.yaml up -d --build
 ```
 
 服务器部署前应设置真实的 `SAG_CORS_ORIGINS` 与 `NEXT_PUBLIC_API_BASE`。升级前同时备份 `pgdata` 和 `sagdata`。
-
----
-
-## 参与贡献与许可
-
-- 贡献流程：[CONTRIBUTING.md](CONTRIBUTING.md)
-- Python 引擎：[`zleap-sag` PyPI](https://pypi.org/project/zleap-sag/)
-- 论文复现：[Zleap-AI/SAG-Benchmark](https://github.com/Zleap-AI/SAG-Benchmark)
-
-SAG 使用 [MIT License](LICENSE)。
-
----
-
-<a id="社区交流"></a>
-
-## 社区交流
-
-通过 Discord 或微信加入 SAG 社区，与项目维护者和其他用户交流。
-
-<table align="center">
-  <tr>
-    <th>Discord</th>
-    <th>微信</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/readme/discord-community-qr.jpg" alt="SAG Discord 社区二维码" width="220" /></td>
-    <td align="center"><img src="docs/assets/readme/wechat-community-qr.png" alt="SAG 微信交流群二维码" width="220" /></td>
-  </tr>
-</table>
