@@ -1,38 +1,24 @@
-<p align="center">
-  <img src="docs/assets/readme/zleap-readme-header.png" alt="Zleap and astronaut" width="294" />
-</p>
-
-<h1 align="center">SAG</h1>
+<h1 align="center">AIM Knowledge Base</h1>
 
 <p align="center">
   <strong>English</strong> · <a href="README-CN.md">简体中文</a>
 </p>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2606.15971"><img alt="Paper" src="https://img.shields.io/badge/paper-arXiv%3A2606.15971-18181b" /></a>
-  <a href="https://pypi.org/project/zleap-sag/"><img alt="PyPI" src="https://img.shields.io/pypi/v/zleap-sag?label=zleap--sag&color=18181b" /></a>
-  <img alt="SAG version" src="https://img.shields.io/badge/SAG-v1.9.2-18181b" />
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776ab" />
   <img alt="Node" src="https://img.shields.io/badge/Node-20%2B-339933" />
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-18181b" /></a>
 </p>
 
-<blockquote>
-  <p align="center">Promotion: Our latest open-source knowledge base app, <strong><a href="https://github.com/Zleap-AI/SAG-Wiki">SAG-Wiki</a></strong>, is faster and lighter, powered by the all-new SAG2.</p>
-</blockquote>
-
-<p align="center"><strong>From now on, this is the only knowledge base app you need.</strong></p>
+<p align="center"><strong>An open-source knowledge base for enterprises, individuals, and Agents.</strong></p>
 
 <p align="center">
-  Built on the state-of-the-art SAG architecture, it turns scattered documents and data into knowledge that is searchable, connected, and traceable.
+  Turn scattered documents and data into knowledge that is searchable, connected, and traceable.
 </p>
-
-https://github.com/user-attachments/assets/ac805e3c-ab52-4857-bef6-2865f3831b2f
 
 ## Contents
 
 <p align="center">
-  <a href="#community">Community</a> ·
   <a href="#project">Project</a> ·
   <a href="#technology">Technology</a> ·
   <a href="#user-guide">User Guide</a> ·
@@ -47,21 +33,19 @@ https://github.com/user-attachments/assets/ac805e3c-ab52-4857-bef6-2865f3831b2f
 
 ### Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for release history and version-specific changes.
+See [CHANGELOG.md](CHANGELOG.md) for AIM Knowledge Base changes.
 
-### SAG in one minute
+### AIM Knowledge Base in one minute
 
-SAG is not a fusion of traditional RAG and GraphRAG. It is an original retrieval architecture that replaces both.
+AIM Knowledge Base is derived from SAG and retains its event-entity indexing and query-time dynamic hyperedge architecture.
 
-Through event-entity indexing and query-time dynamic hyperedges, SAG delivers semantic retrieval and relational reasoning in one system, without maintaining two RAG systems or merging two retrieval paths.
+The SAG architecture delivers semantic retrieval and relational reasoning in one system, without maintaining separate traditional RAG and GraphRAG systems or merging two retrieval paths.
 
-Experiments on HotpotQA, 2WikiMultiHopQA, and MuSiQue show that SAG achieves the best retrieval and end-to-end QA performance on every benchmark, establishing a new state of the art for RAG.
-
-This project is a complete knowledge base application for individuals and Agents built on SAG:
+AIM Knowledge Base builds on this foundation to provide a complete knowledge base application for enterprises, individuals, and Agents:
 
 **sources and documents → structured knowledge → search and source tracing → cited Agent answers → reuse through API or MCP**
 
-Upload a document once. SAG parses it, splits it into chunks, embeds it, extracts events and entities, and keeps every retrieval result connected to the original text. You can then search across sources, inspect the event-entity graph, ask questions with citations, or expose the same knowledge to another application.
+Upload a document once. AIM Knowledge Base parses it, splits it into chunks, embeds it, extracts events and entities, and keeps every retrieval result connected to the original text. You can then search across sources, inspect the event-entity graph, ask questions with citations, or expose the same knowledge to another application.
 
 | Capability | What it gives you |
 | --- | --- |
@@ -80,24 +64,11 @@ The product is deliberately local-first and single-user. It starts with SQLite a
 
 ## Technology
 
-### Paper
-
-**SAG: SQL-Retrieval Augmented Generation with Query-Time Dynamic Hyperedges**<br>
-Yuchao Wu*, Junqin Li, XingCheng Liang, Yongjie Chen, Yinghao Liang, Linyuan Mo, and Guanxian Li
-
-[Read the paper](https://arxiv.org/abs/2606.15971) · [Reproduce the benchmark](https://github.com/Zleap-AI/SAG-Benchmark)
-
-<p align="center">
-  <a href="https://arxiv.org/abs/2606.15971">
-    <img src="docs/assets/readme/paper-first-page.png" alt="First page of the SAG paper" width="900" />
-  </a>
-</p>
-
-### An original third architecture
+### The SAG architecture
 
 Traditional dense RAG retrieves chunks mainly by semantic similarity. GraphRAG adds offline graph construction, but pays for triple extraction, entity merging, relation normalization, global maintenance, and difficult incremental updates.
 
-SAG does not wrap those two systems. It replaces that choice with its own data model and execution path:
+SAG introduces its own data model and execution path instead of wrapping those two systems:
 
 ```text
 chunk → one semantically complete event
@@ -111,10 +82,6 @@ event ↔ entities → one latent hyperedge
 - **Original evidence** remains the output boundary. Selected events always map back to source chunks for generation and citation.
 
 The semantic and structural paths inside SAG are native parts of the SAG pipeline. They are not a traditional RAG service and a GraphRAG service running side by side.
-
-<p align="center">
-  <img src="docs/assets/readme/paper-sag-architecture.png" alt="Original SAG paper architecture" width="940" />
-</p>
 
 ### How retrieval works
 
@@ -134,47 +101,19 @@ The semantic and structural paths inside SAG are native parts of the SAG pipelin
 
 This makes incremental writes natural: a new chunk adds its own event, entities, and associations without recomputing a global graph.
 
-### A new SOTA for RAG
-
-Under the same `BGE-Large-EN-v1.5` embedding and `Qwen3.6-Flash` LLM configuration, SAG achieves the best retrieval and end-to-end QA performance on every benchmark across HotpotQA, 2WikiMultiHopQA, and MuSiQue.
-
-- Across the three datasets, SAG averages **90.07%/72.96%** in Recall@5 and F1, outperforming the strongest baseline for each metric by **6.79/4.33** percentage points, respectively.
-- On the most challenging MuSiQue dataset, SAG outperforms the strongest baseline for each metric by **11.52/7.01** percentage points in Recall@5 and F1, respectively.
-
-Full results:
-
-<p align="center">
-  <img src="docs/assets/readme/main-result.png" alt="SAG benchmark results" width="940" />
-</p>
-
-See the [paper](https://arxiv.org/abs/2606.15971) and [SAG-Benchmark](https://github.com/Zleap-AI/SAG-Benchmark) for the full method and reproduction scripts.
-
 ---
 
 <a id="user-guide"></a>
 
 ## User Guide
 
-### Desktop app (easiest)
-
-Download the latest desktop installer from [GitHub Releases](https://github.com/Zleap-AI/SAG/releases):
-
-| Platform | Download | Update behavior |
-| --- | --- | --- |
-| macOS 15+, Apple Silicon | `SAG-*-mac-arm64.dmg` | Signed and notarized; in-app updates require separate download and install confirmation |
-| Windows 10/11, x64 | `SAG-Setup-*-win-x64.exe` | Unsigned for now; Windows may show an unknown-publisher warning; in-app updates require separate download and install confirmation |
-
-The desktop app bundles the Web workspace and local knowledge backend, so users do not need to install Python, Node.js, or a database. Application updates preserve the knowledge base and uploads in the operating system's application-data directory. Release checksums are published as `SHA256SUMS.txt`.
-
-If SAG detects incompatible legacy knowledge data, it leaves that data unchanged until you confirm a backup and a fresh workspace. SAG does not automatically migrate or merge the old knowledge base; upload your documents again after setup. The backup remains available for manual recovery. Accounts and model settings are preserved, while previous knowledge bases, documents, agents, conversations and related tasks do not appear in the new workspace. Current-format workspaces continue using their existing data directories.
-
 ### Quick start (Docker, self-hosted)
 
 Requirements: Docker Desktop, or Docker Engine with Compose v2.
 
 ```bash
-git clone https://github.com/Zleap-AI/SAG.git
-cd SAG
+git clone https://github.com/boyanilu/aim-knowledge-base.git
+cd aim-knowledge-base
 docker compose up -d --build
 ```
 
@@ -214,10 +153,6 @@ Create a source and add Markdown, text, PDF, Office, or other supported document
 
 File uploads show actual transfer progress. The document list and details show the current processing stage and available chunk counts (for example, “Processed 810 / 2,033 chunks”), without an overall processing percentage. A document is ready to search when its status becomes **Ready**.
 
-<p align="center">
-  <img src="docs/assets/readme/product-import.png" alt="Import a document into SAG" width="940" />
-</p>
-
 PDF files use MinerU when it is configured and fall back to local MarkItDown when it is unavailable or fails. Other Office and text formats use MarkItDown by default.
 
 PDF parsing also supports a self-hosted MinerU 4.x V1 API (`mineru-kit api-server`). Configure `SAG_MINERU_PROVIDER=self_hosted`, `SAG_MINERU_BASE_URL`, and `SAG_DOCUMENT_PARSER=auto` or `mineru` using [`.env.example`](.env.example). Local or private-network endpoints also require `SAG_MINERU_ALLOW_PRIVATE_BASE_URL=true`. Recreate the API container after deployment changes. Previously saved parser/MinerU settings override environment defaults; update those saved values through authenticated `PUT /api/v1/system/model-config` and check the effective configuration before importing PDFs.
@@ -228,10 +163,6 @@ You can also switch the parsing method to **AnyDoc** in settings (or set `SAG_DO
 
 Search across sources or restrict the query to selected sources. Without an explicit selection, global search and default Agent retrieval use up to 16 candidate sources by default. Use `@` to target the sources you need. Every result can open the original chunk beside the ranked result, so retrieval quality is inspectable before an Agent uses it.
 
-<p align="center">
-  <img src="docs/assets/readme/product-search.png" alt="Search results with original source tracing" width="940" />
-</p>
-
 ### Ask with citations
 
 The Agent searches the knowledge sources in the current scope, streams the answer, and attaches clickable citations. The same conversation path is also available through an OpenAI-compatible endpoint.
@@ -240,29 +171,13 @@ Select sources with `@` to narrow a question's knowledge scope. Each question ke
 
 Use **New conversation** in the sidebar to open a blank draft from any page. The draft stays selected when returning to chat, even while an older conversation finishes generating. Existing conversations remain in history; a new thread is saved when you send the first question. SAG generates one answer at a time, so wait for the ongoing answer to finish or stop it before sending in the new draft.
 
-<p align="center">
-  <img src="docs/assets/readme/product-chat.png" alt="Agent answer with source citations" width="940" />
-</p>
-
 ### Explore mode
 
 Explore mode unfolds the entire knowledge base into an interactive knowledge universe. Search events and entities, travel through their relationships, and open event details or original sources without leaving the same view.
 
-<p align="center">
-  <img src="docs/assets/readme/product-explore-mode.gif" alt="SAG Explore mode" width="940" />
-</p>
-
 ### Explore the event-entity graph
 
 Switch a source from list view to graph view to inspect the events, entities, and associations produced by the SAG index.
-
-<p align="center">
-  <img src="docs/assets/readme/product-graph.png" alt="SAG event-entity knowledge graph" width="940" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/readme/product-graph-3d.png" alt="SAG event-entity 3D knowledge graph" width="940" />
-</p>
 
 ### MCP guide
 
@@ -315,10 +230,6 @@ cp -r "$SKILL_SRC/skill" ~/.codex/skills/sag-knowledge
 #### Manual mounting (fallback)
 
 If you can't install the CLI, open **Settings → Integrations → Knowledge MCP** in SAG, pick HTTP or local command, and paste the copied block into your Agent's MCP config file yourself. The HTTP snippet already includes the current JWT and exposes all sources by default; scope it with `source_id` when needed.
-
-<p align="center">
-  <img src="docs/assets/readme/product-mcp.png" alt="SAG Knowledge MCP integration settings" width="940" />
-</p>
 
 ### Use SAG in DeepSeek Harness
 
@@ -399,10 +310,6 @@ On first launch, `password` mode guides you through creating an email and passwo
 ### System boundaries
 
 SAG has a separated Next.js frontend and FastAPI backend. The backend is a reference application built on the public `zleap-sag` Python engine. You can reuse the complete backend from another frontend, or embed `zleap-sag` directly in a Python service of your own.
-
-<p align="center">
-  <img src="docs/assets/readme/repository-architecture.png" alt="SAG repository and API boundaries" width="960" />
-</p>
 
 ### Repository map
 
@@ -677,32 +584,3 @@ docker compose -f compose.yaml -f compose.postgres.yaml up -d --build
 ```
 
 Set real `SAG_CORS_ORIGINS` and `NEXT_PUBLIC_API_BASE` values before server deployment. Back up both `pgdata` and `sagdata` before upgrades.
-
----
-
-## Contributing and License
-
-- Contribution workflow: [CONTRIBUTING.md](CONTRIBUTING.md)
-- Python engine: [`zleap-sag` on PyPI](https://pypi.org/project/zleap-sag/)
-- Paper reproduction: [Zleap-AI/SAG-Benchmark](https://github.com/Zleap-AI/SAG-Benchmark)
-
-SAG is released under the [MIT License](LICENSE).
-
----
-
-<a id="community"></a>
-
-## Community
-
-Join the SAG community on Discord or WeChat to connect with maintainers and other users.
-
-<table align="center">
-  <tr>
-    <th>Discord</th>
-    <th>WeChat</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/readme/discord-community-qr.jpg" alt="SAG Discord community QR code" width="220" /></td>
-    <td align="center"><img src="docs/assets/readme/wechat-community-qr.png" alt="SAG WeChat community QR code" width="220" /></td>
-  </tr>
-</table>
