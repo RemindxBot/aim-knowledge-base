@@ -16,7 +16,7 @@ cd apps/web && npm run typecheck && npm run lint && npm run test:unit && npm run
 
 ## Create a Pull Request
 
-All changes must be submitted through a feature branch on your fork. Pull requests must target the main project's `dev` branch. **Do not open pull requests to `main` or push directly to the main project's `main` or `dev` branches.**
+All changes must be submitted through a feature branch on your fork. Feature pull requests must target the main project's `dev` branch. **Do not push directly to the main project's `main` or `dev` branches.** Only maintainers may open `dev` → `main` release pull requests.
 
 ### 1. Fork and clone
 
@@ -67,7 +67,7 @@ gh pr create \
   --fill
 ```
 
-Describe the purpose, main changes, related issues, and test results in the PR. **Never use `main` as the base branch. Stop if the target repository or branch is incorrect.**
+Describe the purpose, main changes, related issues, and test results in the PR. **Never use `main` as the base branch for a feature PR. Stop if the target repository or branch is incorrect.**
 
 ### 6. Review and sync
 

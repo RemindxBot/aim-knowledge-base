@@ -5,7 +5,8 @@ All agents must follow the contribution workflow in [CONTRIBUTING.md](CONTRIBUTI
 ## Mandatory Rules
 
 - The main project is `boyanilu/aim-knowledge-base`; `origin` is your fork and `upstream` is the main project.
-- Create feature branches from the latest `upstream/dev`. Pull requests must target `dev`; **never target `main`**.
+- Create feature branches from the latest `upstream/dev`. Feature pull requests must target `dev`, not `main`.
+- Maintainers may open `dev` → `main` release pull requests to sync reviewed updates into `main`. This is the permitted way to update `main` through a pull request.
 - Never push directly to the main project's `main` or `dev`, or push feature branches to the main project.
 - Do not include secrets, local configuration, or unrelated generated files. Run relevant checks before creating a pull request.
 - Do not merge unless CI passes and a project maintainer approves. Stop and correct any invalid branch or PR target.
