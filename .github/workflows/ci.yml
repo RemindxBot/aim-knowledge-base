@@ -5,32 +5,13 @@ on:
     branches: [main, dev]
   pull_request:
   workflow_call:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   release-safety:
     name: 发布流程 · 安全回归
     runs-on: ubuntu-latest
-    outputs:
-      full: ${{ steps.scope.outputs.full }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-      - id: scope
-        name: 判断是否需要全量检查
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BASE_REF: ${{ github.base_ref }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: bash "$GITHUB_WORKSPACE/scripts/ci-scope.sh"
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "22"
@@ -42,8 +23,6 @@ jobs:
 
   desktop:
     name: 桌面 · 手动更新回归
-    needs: release-safety
-    if: needs.release-safety.outputs.full == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -64,8 +43,6 @@ jobs:
 
   desktop-windows-certificates:
     name: Windows CA · 冻结运行时回归
-    needs: release-safety
-    if: needs.release-safety.outputs.full == 'true'
     runs-on: windows-2025
     timeout-minutes: 15
     steps:
@@ -102,8 +79,6 @@ jobs:
 
   backend-postgres-e2e:
     name: 后端 · PostgreSQL E2E
-    needs: release-safety
-    if: needs.release-safety.outputs.full == 'true'
     runs-on: ubuntu-latest
     services:
       postgres:

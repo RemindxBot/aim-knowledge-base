@@ -74,8 +74,6 @@ cd apps/web && npm run typecheck && npm run lint && npm run test:unit && npm run
 
 Also run `cd apps/web && npm run i18n:check` for translation changes. For documentation, verify links, commands, and `git diff --check`.
 
-Feature PRs run fast CI. Dependency/workflow changes, maintainer `dev` → `main` release PRs, `main`/`dev` pushes, and manual runs execute full CI. See [CI Checks](CONTRIBUTING.md#ci-checks); do not require skippable heavy jobs in the `dev` ruleset.
-
 ## Environment Variables
 
 Use `apps/api/.env.example` as the backend reference and keep real `.env` files and credentials out of commits.
