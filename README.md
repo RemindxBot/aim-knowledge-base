@@ -33,7 +33,7 @@
 
 ### Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for AIM Knowledge Base changes.
+See the [CHANGELOG.md](CHANGELOG.md) for AIM Knowledge Base changes.
 
 ### AIM Knowledge Base in one minute
 
