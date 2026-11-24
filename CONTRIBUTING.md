@@ -14,9 +14,17 @@ cd apps/api && ruff check sag_api/ sag_agent/ tests/ && python -m pytest -q
 cd apps/web && npm run typecheck && npm run lint && npm run test:unit && npm run build
 ```
 
+## CI Checks
+
+Ordinary feature and documentation pull requests targeting `dev` run fast checks: release safety, backend lint/tests, and frontend checks. When plugin-related files change, the plugin lint, typecheck, unit tests, release boundary, and package checks also run without the live SAG acceptance test.
+
+A pull request runs the full suite when it targets `main` for a maintainer release or changes dependency manifests, lockfiles, package-manager configuration, Dependabot configuration, the CI scope script, or GitHub Actions workflows/actions. Full checks add desktop regression, Windows certificate regression, PostgreSQL E2E, and live plugin acceptance where applicable. Pushes to `main` or `dev` and manually dispatched CI runs also execute the full suite.
+
+For the `dev` branch ruleset, require only the main CI jobs `release-safety`, `backend`, and `frontend`. Do not globally require the path-filtered plugin job or heavy jobs that are skipped for fast pull requests.
+
 ## Create a Pull Request
 
-All changes must be submitted through a feature branch on your fork. Pull requests must target the main project's `dev` branch. **Do not open pull requests to `main` or push directly to the main project's `main` or `dev` branches.**
+All changes must be submitted through a feature branch on your fork. Feature pull requests must target the main project's `dev` branch. **Do not push directly to the main project's `main` or `dev` branches.** Only maintainers may open `dev` → `main` release pull requests.
 
 ### 1. Fork and clone
 
@@ -67,7 +75,7 @@ gh pr create \
   --fill
 ```
 
-Describe the purpose, main changes, related issues, and test results in the PR. **Never use `main` as the base branch. Stop if the target repository or branch is incorrect.**
+Describe the purpose, main changes, related issues, and test results in the PR. **Never use `main` as the base branch for a feature PR. Stop if the target repository or branch is incorrect.**
 
 ### 6. Review and sync
 
